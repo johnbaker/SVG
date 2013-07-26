@@ -39,10 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Svg, Version=0.5.2.37153, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Svg.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -58,10 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\Svg.dll" />
+    <Content Include="test.svg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="sample.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Svg.csproj">
+      <Project>{886A98C5-37C0-4E8B-885E-30C1D2F98B47}</Project>
+      <Name>Svg</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

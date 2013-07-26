@@ -11,15 +11,11 @@ namespace Entities
     {
         static void Main(string[] args)
         {
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\sample.svg");
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\test.svg");
 
-            var sampleDoc = SvgDocument.Open(filePath, new Dictionary<string, string> 
-                {
-                    {"entity1", "fill:red" },
-                    {"entity2", "fill:yellow" }
-                });
+            var sampleDoc = SvgDocument.Open(filePath );
 
-            sampleDoc.Draw().Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\sample.png"));
+            sampleDoc.Draw().Save(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\test.png"));
         }
     }
 }

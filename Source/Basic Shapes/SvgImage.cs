@@ -2,6 +2,9 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Svg.Transforms;
+using System.Text.RegularExpressions;
+using System.Net;
+using System.IO;
 
 namespace Svg
 {
@@ -82,7 +85,33 @@ namespace Svg
         {
             get
             {
-				return null;
+				var rectangle = new RectangleF(Location.ToDeviceValue(),
+				                               new SizeF(Width.ToDeviceValue(), Height.ToDeviceValue()));
+
+				var _path = new GraphicsPath();
+				_path.StartFigure();
+				_path.AddRectangle(rectangle);
+				_path.CloseFigure();
+
+				return _path;
+            }
+        }
+
+        protected internal override void RenderFill(SvgRenderer renderer)
+        {
+            // this will render a data:image image, but not any other types.  That is up to you to implement.
+            var match = Regex.Match(Href.AbsoluteUri, @"data:image/(?<type>.+?),(?<data>.+)");
+            if (match != null && match.Groups["data"] != null)
+            {
+                var base64Data = match.Groups["data"].Value;
+                var binData = Convert.FromBase64String(base64Data);
+                using (var stream = new MemoryStream(binData))
+                {
+                    Image image = new Bitmap(stream);
+                    var b = new TextureBrush(image);
+                    b.ScaleTransform(this.Path.GetBounds().Size.Width / image.Width, this.Path.GetBounds().Size.Height / image.Height);
+                    renderer.FillPath(b, this.Path);
+                }
             }
         }
 
@@ -93,8 +122,7 @@ namespace Svg
         {
             if (Width.Value > 0.0f && Height.Value > 0.0f)
             {
-				//TODO:
-                //base.Render(renderer);
+                base.Render(renderer);
             }
         }
 

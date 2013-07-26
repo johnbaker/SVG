@@ -124,7 +124,9 @@ namespace Svg
         public virtual string FontFamily
         {
             get { return this._fontFamily; }
-            set { this._fontFamily = value; this.IsPathDirty = true; }
+            set { 
+                //
+            }
         }
 
         /// <summary>
